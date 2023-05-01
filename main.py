@@ -1,4 +1,5 @@
 from math import sqrt, pi, ceil
+from re import sub
 
 CHARECTER_WIDTH_TO_HEIGHT_RAIO = 2
 HOLE_TO_FULL_RATIO = 2.64
@@ -23,6 +24,9 @@ def calculate_sizes(area):
 
 
 def generate_doughnut(text, extra_size=0):
+    # remove whitespaces (-space)
+    text = sub("[^\\S ]+", "", text)
+    
     x_1, y_1, x_2, y_2 = calculate_sizes(len(text))
     
     index = 0
