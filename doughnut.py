@@ -54,13 +54,3 @@ def generate_doughnut(text, extra_size=0):
         return generate_doughnut(text, extra_size+.01)
 
     return result
-
-# generate dougnuts for each line
-if __name__ == "__main__":
-    with open("text.txt", "r") as f:
-        contents = f.read()
-    
-    for text in contents.split("\n"):
-        if not text: continue
-    
-        print(generate_doughnut(text))
