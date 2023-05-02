@@ -28,6 +28,10 @@ def generate_doughnut(text, extra_size=0):
     text = sub("[^\\S ]+", "", text)
     
     x_1, y_1, x_2, y_2 = calculate_sizes(len(text))
+
+    # dont run on an empty doughnut
+    if x_2+extra_size<=0 or y_2+extra_size<=0 or x_1+extra_size<=0 or y_1+extra_size<=0: return ""
+
     
     index = 0
     result = ""
@@ -35,8 +39,8 @@ def generate_doughnut(text, extra_size=0):
     for y in range(ceil(2*y_2)+1):
         y = y-(y_2)
         for x in range(ceil(2*x_2)+1):
-            x = x-(x_2)
-
+            x = x-(x_2)                
+            
             # in doughnut, not in hole
             if ((x**2)/((x_2+extra_size)**2) + (y**2)/((y_2+extra_size)**2) <= 1) and not \
                ((x**2)/((x_1+extra_size)**2) + (y**2)/((y_1+extra_size)**2) <= 1) and \
