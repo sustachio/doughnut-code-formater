@@ -6,9 +6,9 @@ HOLE_TO_FULL_RATIO = 2.64
 PI = pi
 
 # given a (area) find and width of doughnut and doughnut hole
-def calculate_sizes(area):
+def calculate_sizes(area, extra_size):
     # https://www.desmos.com/calculator/8zn0ov3d73
-    x_1 = sqrt(area/(PI*CHARECTER_WIDTH_TO_HEIGHT_RAIO*(HOLE_TO_FULL_RATIO**2-1)))
+    x_1 = sqrt(area/(PI*CHARECTER_WIDTH_TO_HEIGHT_RAIO*(HOLE_TO_FULL_RATIO**2-1)))+extra_size
     y_1 = x_1*CHARECTER_WIDTH_TO_HEIGHT_RAIO
 
     x_2 = x_1*HOLE_TO_FULL_RATIO
@@ -18,7 +18,7 @@ def calculate_sizes(area):
     #new_area = PI*x_2*y_2 - PI*x_1*y_1
     #innacuracy = new_area-area
     #print("Found circle with innacuracy of:", innacuracy)
-
+    
     # i got the x and y mixed up
     return(y_1, x_1, y_2, x_2)
 
@@ -27,10 +27,10 @@ def generate_doughnut(text, extra_size=0):
     # remove whitespaces (-space)
     text = sub("[^\\S ]+", "", text)
     
-    x_1, y_1, x_2, y_2 = calculate_sizes(len(text))
+    x_1, y_1, x_2, y_2 = calculate_sizes(len(text), extra_size)
 
     # dont run on an empty doughnut
-    if x_2+extra_size<=0 or y_2+extra_size<=0 or x_1+extra_size<=0 or y_1+extra_size<=0: return ""
+    if x_2<=0 or y_2<=0 or x_1<=0 or y_1<=0: return ""
 
     
     index = 0
@@ -42,8 +42,8 @@ def generate_doughnut(text, extra_size=0):
             x = x-(x_2)                
             
             # in doughnut, not in hole
-            if ((x**2)/((x_2+extra_size)**2) + (y**2)/((y_2+extra_size)**2) <= 1) and not \
-               ((x**2)/((x_1+extra_size)**2) + (y**2)/((y_1+extra_size)**2) <= 1) and \
+            if ((x**2)/((x_2)**2) + (y**2)/((y_2)**2) <= 1) and not \
+               ((x**2)/((x_1)**2) + (y**2)/((y_1)**2) <= 1) and \
                index<len(text):
                 result += text[index]
                 index += 1
