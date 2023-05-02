@@ -1,10 +1,11 @@
 from doughnut import generate_doughnut
 
-# generate dougnuts for each line
 with open("text.txt", "r") as f:
     contents = f.read()
 
-for text in contents.split("\n"):
-    if not text: continue # skip empty lines
+# big doughnut
+print(generate_doughnut(contents))
 
+# one doughnut for each line
+for text in contents.split("\n"):
     print(generate_doughnut(text))
